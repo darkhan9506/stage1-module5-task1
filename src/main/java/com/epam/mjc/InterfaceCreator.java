@@ -21,46 +21,31 @@ public class InterfaceCreator {
     }
 
     public Consumer<List<Integer>> addEvenValuesAtTheEnd() {
-//        return l -> {
-//            for (int i = 0; i < l.size(); i++) {
-//                if (l.get(i) % 2 == 0) l.add(i);
-//            }
-//        };
 
         List<Integer> result = new ArrayList<>();
-        Consumer<List<Integer>> print;
-        print = x -> {
-            if (!x.isEmpty()) {
+        return list -> {
+            if (!list.isEmpty()) {
+                result.addAll(list);
 
-//                Iterator<Integer> iterator = x.iterator();
-//                while (iterator.hasNext()) {
-//                    result.add(iterator.next());
-//                }
-
-                for (int n : x) {
-                    result.add(n);
-                }
-
-                for (int n : x) {
+                for (int n : list) {
                     if (n % 2 == 0) result.add(n);
                 }
-                x.clear();
-                x.addAll(result);
+                list.clear();
+                list.addAll(result);
             }
         };
-        return print;
     }
 
     public Supplier<List<String>> filterCollection(List<String> values) {
         return () -> values.stream()
-                .filter(s -> Character.isUpperCase(s.charAt(0)) && s.endsWith("."))
-                .filter(s -> s.split("\\s+").length > 3)
+                .filter(s -> Character.isUpperCase(s.charAt(0)) && s.endsWith(".")
+                        && s.split("\\s+").length > 3)
                 .collect(Collectors.toList());
     }
 
     public Function<List<String>, Map<String, Integer>> stringSize() {
-        return x -> x.stream()
-                .collect(Collectors.toMap(Function.identity(), String::length));
+        return list -> list.stream()
+                .collect(Collectors.toMap(key -> key, String::length));
     }
 
     public BiFunction<List<Integer>, List<Integer>, List<Integer>> concatList() {
